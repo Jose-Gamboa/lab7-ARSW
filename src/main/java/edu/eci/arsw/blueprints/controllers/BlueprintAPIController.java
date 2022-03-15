@@ -63,8 +63,6 @@ public class BlueprintAPIController {
         }
     }
 
-
-
     @RequestMapping(value = "/{author}/{bpname}", method = RequestMethod.GET)
     public ResponseEntity<?> getBluePrintsByAuthorAndNameInJSON(@PathVariable("author") String author, @PathVariable("bpname") String bpname) {
         try {
@@ -102,6 +100,18 @@ public class BlueprintAPIController {
         } catch (Exception ex) {
             Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error al actualizar el plano, no fue posible encontrarlo", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = "/{author}/{bpname}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteBluePrintsWithJSON(@PathVariable("author") String author, @PathVariable("bpname") String bpname) {
+        try {
+            //Enviar datos de creación para el plano
+            bps.deleteBlueprint(author, bpname);
+            return new ResponseEntity<>("ELIMINADO CON EXITO :D", HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error al eliminar el plano, no fue posible encontrarlo", HttpStatus.NOT_FOUND);
         }
     }
 

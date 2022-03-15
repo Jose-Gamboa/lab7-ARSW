@@ -12,7 +12,6 @@ var module = (function(){
     init();
 
     function init(){
-        console.log("Llamando al canvas............");
         _canvas.init();
     }
 
@@ -41,6 +40,7 @@ var module = (function(){
     var _setTable = function (bpArray){
         //Agrega cada fila de la tabla
         //Ponerle al boton el mismo nombre del plano para sacar el id del botón al dibujar
+        $("#tablebp > tbody").empty();
         bpArray.map(blueprint => $("table tbody").append("<tr><td>" + blueprint[0] + "</td><td>" + blueprint[1] + "</td><td><button  class='btn btn-secondary' id="+blueprint[0] +" "+ "type='button' onclick=module.getBluePrintToShow(this)>Open</button></td></tr>"));
         var numArray = bpArray.map(blueprint => blueprint[1]);
         //Agrega el total de puntos
@@ -57,8 +57,6 @@ var module = (function(){
 
     //Nueva funcion para guardar los puntos del plano mostrado en ese momento
     var setPoints = function(pointsToMap){
-        //pointsToMap.points.map( point => _points.push(point));
-        console.log("Obtuve y guarde los puntos " + _points);
         _points = pointsToMap;
     }
     //Nueva para retormar los puntos del plano seleccionado actual
@@ -71,10 +69,14 @@ var module = (function(){
         return _currentBP;
     }
 
+    var _cleanCanvas = function(){
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
 
     var _drawInCanvas = function(pointsOne){
         _currentBP =  document.getElementById('author').value;
-
         $("#currentbp").text("Current blueprint: "+ pointsOne.name);
         var canvas = document.getElementById('myCanvas');
         var ctx = canvas.getContext('2d');
@@ -86,20 +88,23 @@ var module = (function(){
         for(var i = 1; i < pointsOne.points.length; i++){
             ctx.lineTo(pointsOne.points[i].x, pointsOne.points[i].y);
         }
-        ctx.lineTo(pointsOne.points[0].x, pointsOne.points[0].y);
         ctx.strokeStyle = "grey";
         ctx.stroke();
         //Recorrer los puntos y unir
     }
 
     var savePoints = function(){
-        var data =  _points.points.concat(_canvas.getNewPoints());
+        var data =  _points.points.concat(_points.points[0]);
+        data =  _points.points.concat(_canvas.getNewPoints());
         _points.points = data;
-        _module.putBluePrintByNameAndAuthor( _author, nameBP, _points);
-        setBluePrints(_author);
+        _module.putBluePrintByNameAndAuthor( _author, nameBP, _points, setBluePrints);
+        _cleanCanvas();
     }
 
-
+    var deleteBlueprints = function(){
+        _cleanCanvas();
+        _module.deleteBluePrintByNameAndAuthor( _author, nameBP, setBluePrints);
+    }
 
     return {
         getBluePrintsByAuthor:getBluePrintsByAuthor,
@@ -108,7 +113,8 @@ var module = (function(){
         getBluePrint:getBluePrint,
         setPoints:setPoints,
         getPoints:getPoints,
-        savePoints:savePoints
+        savePoints:savePoints,
+        deleteBlueprints:deleteBlueprints
     };
 
 })();

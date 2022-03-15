@@ -68,5 +68,8 @@ public class BlueprintsServices {
         return bpf.filterBlueprints(blueprints);
     }
 
+    public void deleteBlueprint(String author, String bpname) throws BlueprintPersistenceException {
+        bpp.deleteBlueprint(author, bpname);
+    }
 
 }

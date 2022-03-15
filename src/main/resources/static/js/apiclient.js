@@ -14,17 +14,26 @@ apiclient=(function(){
 	                                                    callback(data)});
 		},
 
-        putBluePrintByNameAndAuthor:function(authname,bpname,points){
-            console.log("");
+        putBluePrintByNameAndAuthor:function(authname,bpname,points,callback){
             $.ajax({
                 url: "http://localhost:8080/blueprints/"+authname+"/"+bpname,
                 type: 'PUT',
                 data: JSON.stringify(points),
                 contentType: "application/json"
             }).then(function(){
-                console.log("Then in put");
+                callback(authname);
+            });
+        },
+
+        deleteBluePrintByNameAndAuthor:function(authname,bpname, callback){
+            $.ajax({
+                url: "http://localhost:8080/blueprints/"+authname+"/"+bpname,
+                type: 'DELETE'
+            }).then(function(){
+                callback(authname, bpname);
             });
         }
+
     }
 })();
 
