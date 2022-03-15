@@ -1,0 +1,31 @@
+h1 {
+    color: #1F2E38;
+    font-family: 'Butler', sans-serif;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-align: left;
+    font-size: 400%;
+
+}
+
+p {
+    color: #00000;
+    font-family: 'Butler', sans-serif;
+    letter-spacing: 1px;
+    font-weight: bold;
+    font-size: 150%;
+}
+
+table {
+
+    color: #1F2E38;
+}
+
+table th {
+  text-align: center;
+}
+
+table td {
+  text-align: center;
+}
+
