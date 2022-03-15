@@ -17,7 +17,7 @@ apiclient=(function(){
         putBluePrintByNameAndAuthor:function(authname,bpname,points){
             console.log("");
             $.ajax({
-                url: "/blueprints/"+authname+"/"+bpname,
+                url: "http://localhost:8080/blueprints/"+authname+"/"+bpname,
                 type: 'PUT',
                 data: JSON.stringify(points),
                 contentType: "application/json"

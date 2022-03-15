@@ -57,8 +57,9 @@ var module = (function(){
 
     //Nueva funcion para guardar los puntos del plano mostrado en ese momento
     var setPoints = function(pointsToMap){
-        pointsToMap.points.map( point => _points.push(point));
+        //pointsToMap.points.map( point => _points.push(point));
         console.log("Obtuve y guarde los puntos " + _points);
+        _points = pointsToMap;
     }
     //Nueva para retormar los puntos del plano seleccionado actual
     var getPoints = function(){
@@ -92,8 +93,9 @@ var module = (function(){
     }
 
     var savePoints = function(){
-        var data =  _points.concat(_canvas.getNewPoints());
-        _module.putBluePrintByNameAndAuthor( _author, nameBP, data);
+        var data =  _points.points.concat(_canvas.getNewPoints());
+        _points.points = data;
+        _module.putBluePrintByNameAndAuthor( _author, nameBP, _points);
         setBluePrints(_author);
     }
 
