@@ -12,10 +12,20 @@ apiclient=(function(){
 
 	        $.get("/blueprints/"+authname+"/"+bpname, function(data) {
 	                                                    callback(data)});
-		    }
+		},
 
-	}
-
+        putBluePrintByNameAndAuthor:function(authname,bpname,points){
+            console.log("");
+            $.ajax({
+                url: "/blueprints/"+authname+"/"+bpname,
+                type: 'PUT',
+                data: JSON.stringify(points),
+                contentType: "application/json"
+            }).then(function(){
+                console.log("Then in put");
+            });
+        }
+    }
 })();
 
 

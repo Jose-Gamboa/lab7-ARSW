@@ -30,7 +30,7 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
     public InMemoryBlueprintPersistence() {
 
         //load stub data
-        Point[] pts=new Point[]{new Point(150, 150),new Point(190, 110), new Point(230, 150) ,new Point(190,110)};
+        Point[] pts=new Point[]{new Point(150, 150),new Point(190, 110), new Point(230, 150) ,new Point(190,120)};
         Blueprint bp=new Blueprint("jose", "casa",pts);
 
         Point[] pts1=new Point[]{new Point(154, 140),new Point(115, 115),new Point(554, 140),new Point(515, 525),new Point(315, 425)};

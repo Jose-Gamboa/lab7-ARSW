@@ -3,11 +3,11 @@ var module = (function(){
     var _author;
     //Nombre plano, Numero puntos
     var _bluePrints = [];
-    var _module = apimock;
+    var _module = apiclient;
     var _canvas = moduleCanvas;
     var _currentBP;
     //Nuevo para sacar puntos
-    var _points;
+    var _points = [];
 
     init();
 
@@ -56,9 +56,13 @@ var module = (function(){
     }
 
     //Nueva funcion para guardar los puntos del plano mostrado en ese momento
-    var setPoints = function(points){
-        _points = points;
+    var setPoints = function(pointsToMap){
+        pointsToMap.points.map( point => _points.push(point));
         console.log("Obtuve y guarde los puntos " + _points);
+    }
+    //Nueva para retormar los puntos del plano seleccionado actual
+    var getPoints = function(){
+        return _points;
     }
 
     //Nueva para retornar el plano
@@ -85,16 +89,12 @@ var module = (function(){
         ctx.strokeStyle = "grey";
         ctx.stroke();
         //Recorrer los puntos y unir
+    }
 
-        /**var c = document.getElementById("myCanvas");
-        var ctx = c.getContext("2d");
-        ctx.beginPath();
-        ctx.moveTo(20, 20);
-        ctx.lineTo(20, 100);
-        ctx.lineTo(70, 100);
-        ctx.strokeStyle = "red";
-        ctx.stroke();
-        */
+    var savePoints = function(){
+        var data =  _points.concat(_canvas.getNewPoints());
+        _module.putBluePrintByNameAndAuthor( _author, nameBP, data);
+        setBluePrints(_author);
     }
 
 
@@ -104,7 +104,9 @@ var module = (function(){
         getBluePrintToShow:getBluePrintToShow,
         init:init,
         getBluePrint:getBluePrint,
-        setPoints:setPoints
+        setPoints:setPoints,
+        getPoints:getPoints,
+        savePoints:savePoints
     };
 
 })();
