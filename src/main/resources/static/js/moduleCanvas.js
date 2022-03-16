@@ -5,7 +5,6 @@ var moduleCanvas = (()=>{
 var _canvas = document.getElementById('myCanvas');
 var _context = _canvas.getContext("2d");
 
-
  //Canvas actual
  var _points = [];
  var _currentBP;
@@ -14,8 +13,8 @@ var _context = _canvas.getContext("2d");
     if (window.PointerEvent) {
         _canvas.addEventListener("pointerdown", (event) => {
               //Verificar si ya hay un plano dibujado
-              _currentBP = module.getBluePrint();
-              if ( _currentBP !== undefined){
+              _currentAuthor = module.getAuthor();
+              if (_currentAuthor !== undefined){
                 //Punto encontrado
                 var { pageX, pageY } = event;
                 //Ejemplo context.fillRect(event.pageX-offset, event.pageY-offset, 5, 5);
@@ -29,7 +28,7 @@ var _context = _canvas.getContext("2d");
                 _context.stroke();
               }else{
                     //Si no se ha seleccionado un plano no debe dejar dibujar en el canvas
-                    alert('Primero debe seleccionar un plano!!!');
+                    alert('Primero debe seleccionar un autor!!!');
               }
             });
     }
@@ -38,7 +37,6 @@ var _context = _canvas.getContext("2d");
  var getNewPoints= function (){
     return _points;
  }
-
 
  //returns an object with 'public' functions:
  return {

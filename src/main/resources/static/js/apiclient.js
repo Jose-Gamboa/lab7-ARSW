@@ -32,9 +32,18 @@ apiclient=(function(){
             }).then(function(){
                 callback(authname, bpname);
             });
+        },
+
+        postNewBlueprint:function(new_blueprint,callback){
+            $.ajax({
+                url: "http://localhost:8080/blueprints/new",
+                type: 'POST',
+                data: JSON.stringify(new_blueprint),
+                contentType: "application/json"
+            }).then(function(){
+               callback(new_blueprint.author);
+           });
         }
 
     }
 })();
-
-

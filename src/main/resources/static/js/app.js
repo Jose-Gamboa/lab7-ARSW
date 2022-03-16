@@ -8,6 +8,9 @@ var module = (function(){
     var _currentBP;
     //Nuevo para sacar puntos
     var _points = [];
+    //Bandera para identificar nuevos planos
+    var _newbp = false;
+    var bpname;
 
     init();
 
@@ -26,6 +29,10 @@ var module = (function(){
 
     var setAuthor = function (name) {
         $("#name_author").text(name + "'s blueprints: ");
+    }
+
+    var getAuthor = function(){
+        return _author;
     }
 
     var setBluePrints = function (author){
@@ -93,17 +100,33 @@ var module = (function(){
         //Recorrer los puntos y unir
     }
 
-    var savePoints = function(){
-        var data =  _points.points.concat(_points.points[0]);
-        data =  _points.points.concat(_canvas.getNewPoints());
-        _points.points = data;
-        _module.putBluePrintByNameAndAuthor( _author, nameBP, _points, setBluePrints);
-        _cleanCanvas();
+    var save_updatePoints = function(){
+        if(_newbp==true){
+            if(bpname.length !== 0){
+                var npoints = _canvas.getNewPoints();
+                var nbp = {author:_author,"points":npoints,"name":bpname};
+                _module.postNewBlueprint(nbp, setBluePrints);
+            }else{
+                alert("Por favor ingrese un nombre al plano nuevo que desea crear");
+            }
+        }else{
+            var data =  _points.points.concat(_points.points[0]);
+            data =  _points.points.concat(_canvas.getNewPoints());
+            _points.points = data;
+            _module.putBluePrintByNameAndAuthor( _author, nameBP, _points, setBluePrints);
+            _cleanCanvas();
+        }
     }
 
     var deleteBlueprints = function(){
         _cleanCanvas();
         _module.deleteBluePrintByNameAndAuthor( _author, nameBP, setBluePrints);
+    }
+
+    var saveBlueprint = function(){
+        _cleanCanvas;
+        _newbp = true;
+        bpname = prompt('Nombre del nuevo plano');
     }
 
     return {
@@ -113,8 +136,10 @@ var module = (function(){
         getBluePrint:getBluePrint,
         setPoints:setPoints,
         getPoints:getPoints,
-        savePoints:savePoints,
-        deleteBlueprints:deleteBlueprints
+        save_updatePoints:save_updatePoints,
+        deleteBlueprints:deleteBlueprints,
+        saveBlueprint:saveBlueprint,
+        getAuthor:getAuthor
     };
 
 })();
